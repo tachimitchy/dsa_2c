@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -53,11 +54,11 @@ public class JForm extends javax.swing.JFrame {
         jButton1.setText("Log-In");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        passtxt.setBackground(new java.awt.Color(0, 204, 204));
+        passtxt.setBackground(new java.awt.Color(0, 255, 255));
         passtxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        usertxt.setBackground(new java.awt.Color(0, 204, 204));
-        usertxt.setForeground(new java.awt.Color(204, 204, 204));
+        usertxt.setBackground(new java.awt.Color(0, 255, 255));
+        usertxt.setForeground(new java.awt.Color(153, 153, 153));
         usertxt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         usertxt.setText("username");
 
@@ -146,7 +147,7 @@ public class JForm extends javax.swing.JFrame {
                 }
             }
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            // logger.log(java.util.logging.Level.SEVERE, null, (UnsupportedLookAndFeelException) ex);
         }
         //</editor-fold>
 
