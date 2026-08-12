@@ -108,7 +108,7 @@ public class JForm extends javax.swing.JFrame {
         String userpass = String.valueOf(pass);
         
         try{
-            String sqlquery = "Select * FROM Table1 WHERE user_name = ? and user_password = ? ";
+            String sqlquery = "Select * FROM Table1 WHERE Username = ? and Password = ? ";
             
                 pst = conn.prepareStatement(sqlquery);
                 pst.setString(1,user);
