@@ -75,7 +75,7 @@ public class ordersystem extends javax.swing.JFrame {
         Latiao.setBackground(new java.awt.Color(102, 255, 204));
         Latiao.setFont(new java.awt.Font("Kannada MN", 1, 13)); // NOI18N
         Latiao.setText("LATIAO");
-        Latiao.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Latiao.setBorder(javax.swing.BorderFactory.createLineBorder(null));
         panel1.add(Latiao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 160, 30));
 
         Hawflakes.setBackground(new java.awt.Color(102, 255, 204));
@@ -116,7 +116,8 @@ public class ordersystem extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(6, 97, 153));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        total_order.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        total_order.setBackground(new java.awt.Color(102, 255, 204));
+        total_order.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         total_order.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         total_order.setText("TOTAL ORDER: ");
         jPanel3.add(total_order, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 20));
@@ -124,7 +125,7 @@ public class ordersystem extends javax.swing.JFrame {
         amount.setFont(new java.awt.Font("Krungthep", 1, 13)); // NOI18N
         jPanel3.add(amount, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 90, -1));
 
-        cash.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        cash.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         cash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cash.setText("CASH AMOUNT:");
         jPanel3.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, 20));
@@ -132,7 +133,6 @@ public class ordersystem extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(255, 212, 68));
         jButton1.setFont(new java.awt.Font("Krungthep", 1, 13)); // NOI18N
         jButton1.setText("PAY");
-        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -145,7 +145,6 @@ public class ordersystem extends javax.swing.JFrame {
         co.setBackground(new java.awt.Color(255, 212, 68));
         co.setFont(new java.awt.Font("Krungthep", 1, 18)); // NOI18N
         co.setText("CONFIRM ORDER");
-        co.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         co.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 coActionPerformed(evt);
@@ -203,9 +202,43 @@ public class ordersystem extends javax.swing.JFrame {
 
     private String list = "";
     private int total = 0;
+    private void resetOrder(){
+        list = "";
+        total = 0;
+    }
+    private void processOrder(){
+        coActionPerformed(null);
+    }
+    private void anotherOrder(){
+        int choice = JOptionPane.showConfirmDialog(null, "Would you like to make another order?", "Another Order", JOptionPane.YES_NO_OPTION);
+        if(choice == JOptionPane.YES_OPTION){
+            list = "";
+            total = 0;
+            amount.setText("");
+            
+            Latiao.setSelected(false);
+            Hawflakes.setSelected(false);
+            Woonut.setSelected(false);
+            Dutch.setSelected(false);
+            Mogumogu.setSelected(false);
+            Soybean.setSelected(false);
+            
+            latiao_quan.setValue(0);
+            hawflakes_quan.setValue(0);
+            woonut_quan.setValue(0);
+            dutch_quan.setValue(0);
+            mogu_quan.setValue(0);
+            soybean_quan.setValue(0);
+            
+            processOrder();
+        }else{
+            JOptionPane.showMessageDialog(null, "Thank you for your order");
+        }
+    }
     
     private void coActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coActionPerformed
         total = 0;
+        list = "";
         
         while(true){
             
@@ -213,6 +246,7 @@ public class ordersystem extends javax.swing.JFrame {
             int quantity = (int) latiao_quan.getValue();
             if(quantity != 0){
                 latiao_quan.setValue(0);
+                resetOrder();
                 continue;
             }
         }else if(Latiao.isSelected()){
@@ -234,12 +268,14 @@ public class ordersystem extends javax.swing.JFrame {
             int quantity = (int) hawflakes_quan.getValue();
             if(quantity != 0){
                 hawflakes_quan.setValue(0);
+                list = "";
+                total = 0;
                 continue;
             }
         }else if(Hawflakes.isSelected()){
             if((int) hawflakes_quan.getValue() > 0){
                 int quantity = (int) hawflakes_quan.getValue();
-                int price = 25;
+                int price = 30;
                 int subtotal = quantity * price;
                 total += subtotal;
                 if(quantity > 0){
@@ -255,6 +291,8 @@ public class ordersystem extends javax.swing.JFrame {
             int quantity = (int) woonut_quan.getValue();
             if(quantity != 0){
                 woonut_quan.setValue(0);
+                list = "";
+                total = 0;
                 continue;
             }
         }else if(Woonut.isSelected()){
@@ -278,6 +316,8 @@ public class ordersystem extends javax.swing.JFrame {
             int quantity = (int) dutch_quan.getValue();
             if(quantity != 0){
                 dutch_quan.setValue(0);
+                list = "";
+                total = 0;
                 continue;
             }
         }else if(Dutch.isSelected()){
@@ -300,12 +340,14 @@ public class ordersystem extends javax.swing.JFrame {
             int quantity = (int) mogu_quan.getValue();
             if(quantity != 0){
                 mogu_quan.setValue(0);
+                list = "";
+                total = 0;
                 continue;
             }
         }else if(Mogumogu.isSelected()){
             if((int) mogu_quan.getValue() > 0){
                 int quantity = (int) mogu_quan.getValue();
-                int price = 35;
+                int price = 25;
                 int subtotal = quantity * price;
                 total += subtotal;    
                 if(quantity > 0){
@@ -322,12 +364,14 @@ public class ordersystem extends javax.swing.JFrame {
             int quantity = (int) soybean_quan.getValue();
             if(quantity != 0){
                 soybean_quan.setValue(0);
+                list = "";
+                total = 0;
                 continue;
             }
         }else if(Soybean.isSelected()){
             if((int) soybean_quan.getValue() > 0){
                 int quantity = (int) soybean_quan.getValue();
-                int price = 35;
+                int price = 20;
                 int subtotal = quantity * price;
                 total += subtotal;    
                 if(quantity > 0){
@@ -363,6 +407,8 @@ public class ordersystem extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Please Enter A sufficient amount");
             amount.setText("");
         }
+        
+        anotherOrder();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
