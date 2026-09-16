@@ -75,7 +75,7 @@ public class ordersystem extends javax.swing.JFrame {
         Latiao.setBackground(new java.awt.Color(102, 255, 204));
         Latiao.setFont(new java.awt.Font("Kannada MN", 1, 13)); // NOI18N
         Latiao.setText("LATIAO");
-        Latiao.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        Latiao.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         panel1.add(Latiao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 160, 30));
 
         Hawflakes.setBackground(new java.awt.Color(102, 255, 204));
@@ -133,6 +133,7 @@ public class ordersystem extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(255, 212, 68));
         jButton1.setFont(new java.awt.Font("Krungthep", 1, 13)); // NOI18N
         jButton1.setText("PAY");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -145,6 +146,7 @@ public class ordersystem extends javax.swing.JFrame {
         co.setBackground(new java.awt.Color(255, 212, 68));
         co.setFont(new java.awt.Font("Krungthep", 1, 18)); // NOI18N
         co.setText("CONFIRM ORDER");
+        co.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         co.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 coActionPerformed(evt);
@@ -191,6 +193,11 @@ public class ordersystem extends javax.swing.JFrame {
         qty2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         qty2.setText("QTY");
         qty2.setBorder(new javax.swing.border.MatteBorder(null));
+        qty2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                qty2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(qty2, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 10, 90, 30));
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 280, 180));
@@ -233,6 +240,21 @@ public class ordersystem extends javax.swing.JFrame {
             processOrder();
         }else{
             JOptionPane.showMessageDialog(null, "Thank you for your order");
+            amount.setText("");
+            
+            Latiao.setSelected(false);
+            Hawflakes.setSelected(false);
+            Woonut.setSelected(false);
+            Dutch.setSelected(false);
+            Mogumogu.setSelected(false);
+            Soybean.setSelected(false);
+            
+            latiao_quan.setValue(0);
+            hawflakes_quan.setValue(0);
+            woonut_quan.setValue(0);
+            dutch_quan.setValue(0);
+            mogu_quan.setValue(0);
+            soybean_quan.setValue(0);
         }
     }
     
@@ -268,8 +290,7 @@ public class ordersystem extends javax.swing.JFrame {
             int quantity = (int) hawflakes_quan.getValue();
             if(quantity != 0){
                 hawflakes_quan.setValue(0);
-                list = "";
-                total = 0;
+                resetOrder();
                 continue;
             }
         }else if(Hawflakes.isSelected()){
@@ -291,8 +312,7 @@ public class ordersystem extends javax.swing.JFrame {
             int quantity = (int) woonut_quan.getValue();
             if(quantity != 0){
                 woonut_quan.setValue(0);
-                list = "";
-                total = 0;
+                resetOrder();
                 continue;
             }
         }else if(Woonut.isSelected()){
@@ -316,8 +336,7 @@ public class ordersystem extends javax.swing.JFrame {
             int quantity = (int) dutch_quan.getValue();
             if(quantity != 0){
                 dutch_quan.setValue(0);
-                list = "";
-                total = 0;
+                resetOrder();
                 continue;
             }
         }else if(Dutch.isSelected()){
@@ -330,7 +349,7 @@ public class ordersystem extends javax.swing.JFrame {
                     list += "Dutch Mill x" + quantity + " - " + "P" + subtotal + "\n";
                 }
             }else{
-                JOptionPane.showMessageDialog(null,"error");
+                JOptionPane.showMessageDialog(null,"please enter a QTY for Dutch Mill");
                 dutch_quan.setValue(0);
                 return;
             }
@@ -340,8 +359,7 @@ public class ordersystem extends javax.swing.JFrame {
             int quantity = (int) mogu_quan.getValue();
             if(quantity != 0){
                 mogu_quan.setValue(0);
-                list = "";
-                total = 0;
+                resetOrder();
                 continue;
             }
         }else if(Mogumogu.isSelected()){
@@ -354,7 +372,7 @@ public class ordersystem extends javax.swing.JFrame {
                     list += "Mogumogu x" + quantity + " - " + "P" + subtotal + "\n";
                 }
             }else{
-                JOptionPane.showMessageDialog(null,"error");
+                JOptionPane.showMessageDialog(null,"please enter a QTY for Mogu-mogu");
                 mogu_quan.setValue(0);
                 return;
             }
@@ -364,8 +382,7 @@ public class ordersystem extends javax.swing.JFrame {
             int quantity = (int) soybean_quan.getValue();
             if(quantity != 0){
                 soybean_quan.setValue(0);
-                list = "";
-                total = 0;
+                resetOrder();
                 continue;
             }
         }else if(Soybean.isSelected()){
@@ -378,7 +395,7 @@ public class ordersystem extends javax.swing.JFrame {
                     list += "Soybean x" + quantity + " - " + "P" + subtotal + "\n";
                 }
             }else{
-                JOptionPane.showMessageDialog(null,"error");
+                JOptionPane.showMessageDialog(null,"please enter a QTY for Soybean Milk");
                 soybean_quan.setValue(0);
                 return;
             }
@@ -410,6 +427,10 @@ public class ordersystem extends javax.swing.JFrame {
         
         anotherOrder();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void qty2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qty2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_qty2ActionPerformed
 
     /**
      * @param args the command line arguments
