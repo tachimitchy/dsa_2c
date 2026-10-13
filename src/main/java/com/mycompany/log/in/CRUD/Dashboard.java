@@ -3,18 +3,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.log.in.CRUD;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Chichi
  */
 public class Dashboard extends javax.swing.JFrame {
-
+    Connection conn;
+    PreparedStatement pst;
+    ResultSet rs;
+    
+    private int selectedID = -1;
     /**
      * Creates new form Dashboard
      */
     public Dashboard() {
         initComponents();
+        conn = DBConnect.conn();
+        this.setResizable(false);
+        tblapplication.getSelectionModel()
+                .addListSelectionListener(e -> {
+                    if(!e.getValueIsAdjusting()){
+                        loadSelectedRow();
+                    }
+                });
+        loadApplications();
     }
 
     /**
@@ -27,16 +44,16 @@ public class Dashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        prod_name = new javax.swing.JTextField();
+        ln_text = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        prod_qty = new javax.swing.JTextField();
+        gen_text = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        prod_price = new javax.swing.JTextField();
+        city_text = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        prod_id = new javax.swing.JTextField();
+        fn_text = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        prod_price1 = new javax.swing.JTextField();
+        add_text = new javax.swing.JTextField();
         createbtn = new javax.swing.JButton();
         updatebtn = new javax.swing.JButton();
         deletebtn = new javax.swing.JButton();
@@ -44,7 +61,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         back = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblapplication = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -53,8 +70,8 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        prod_name.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jPanel1.add(prod_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 160, -1));
+        ln_text.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jPanel1.add(ln_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 160, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Last Name");
@@ -64,37 +81,52 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel2.setText("Gender");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
-        prod_qty.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jPanel1.add(prod_qty, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 160, -1));
+        gen_text.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jPanel1.add(gen_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 160, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Address");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
 
-        prod_price.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jPanel1.add(prod_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 160, -1));
+        city_text.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jPanel1.add(city_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 160, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("First Name");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
-        prod_id.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jPanel1.add(prod_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 160, -1));
+        fn_text.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jPanel1.add(fn_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 160, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("City");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
 
-        prod_price1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jPanel1.add(prod_price1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 160, -1));
+        add_text.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jPanel1.add(add_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 160, -1));
 
         createbtn.setText("CREATE");
+        createbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createbtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(createbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 110, 30));
 
         updatebtn.setText("UPDATE");
+        updatebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatebtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(updatebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 110, 30));
 
         deletebtn.setText("DELETE");
+        deletebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deletebtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(deletebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 380, 110, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 300, 430));
@@ -121,7 +153,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 50));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblapplication.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -137,18 +169,178 @@ public class Dashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblapplication);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 60, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void loadSelectedRow(){
+        int row = tblapplication.getSelectedRow();
+        
+        if(row == -1){
+           return;
+        }
+        selectedID = Integer.parseInt(
+            tblapplication.getValueAt(row,0).toString());
+        
+        fn_text.setText(tblapplication.getValueAt(row, 1).toString());
+        ln_text.setText(tblapplication.getValueAt(row, 2).toString());
+        gen_text.setText(tblapplication.getValueAt(row, 3).toString());
+        city_text.setText(tblapplication.getValueAt(row, 4).toString());
+        add_text.setText(tblapplication.getValueAt(row, 5).toString());
+        
+    }
+    private void loadApplications(){
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel)tblapplication.getModel();
+        model.setRowCount(0);
+                
+        try{
+        String sql = "SELECT ID, FirstName, LastName, Gender, City, Address FROM applications";
+        pst = conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+                    
+            while(rs.next()){
+              model.addRow(new Object[] {
+                rs.getInt("ID"),
+                rs.getString("FirstName"),
+                rs.getString("LastName"),
+                rs.getString("Gender"),
+                rs.getString("City"),
+                rs.getString("Address")
+              });
+            }
+            
+            rs.close();
+            pst.close();
+        }catch(java.sql.SQLException e){
+            JOptionPane.showMessageDialog(
+            this,"Unable to load records:" + e.getMessage()
+            );
+        }
+    }
+            
+    private void clearFields(){
+        fn_text.setText("");
+        ln_text.setText("");
+        gen_text.setText("");
+        city_text.setText("");
+        add_text.setText("");
+    }
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         this.hide();
-        CRUD_APP crud_appObj = new CRUD_APP();
+        LogIn crud_appObj = new LogIn();
         crud_appObj.show();
     }//GEN-LAST:event_backActionPerformed
+
+    private void createbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createbtnActionPerformed
+        String fn = fn_text.getText();
+        String ln = ln_text.getText();
+        String gen = gen_text.getText();
+        String city = city_text.getText();
+        String add = add_text.getText();
+        
+        if(fn.isEmpty() || ln.isEmpty() || gen.isEmpty() || city.isEmpty() || add.isEmpty()){
+           JOptionPane.showMessageDialog(this,"Please fill in all fields.");
+           return;
+        }
+        
+            
+        try{
+        String sql = "Insert INTO applications " + "(FirstName, LastName, Gender, City, Address)" + "VALUES (?, ?, ?, ?, ?)";
+        pst = conn.prepareStatement(sql);
+            
+
+            pst.setString(1,fn);
+            pst.setString(2,ln);
+            pst.setString(3,gen);
+            pst.setString(4,city);
+            pst.setString(5,add);
+                
+            pst.executeUpdate();
+                
+            JOptionPane.showMessageDialog(
+              this,"Record created Successfully!");
+                
+            loadApplications();
+            clearFields();
+                
+        }catch (java.sql.SQLException e){
+            JOptionPane.showMessageDialog(
+            this, "Database error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_createbtnActionPerformed
+
+    private void updatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatebtnActionPerformed
+        if(selectedID == -1){
+            JOptionPane.showMessageDialog(
+            this,"Please select a record from the table first.");
+            return;
+        }
+        String fn = fn_text.getText();
+        String ln = ln_text.getText();
+        String gen = gen_text.getText();
+        String city = city_text.getText();
+        String add = add_text.getText();
+        
+        if(fn.isEmpty() || ln.isEmpty() || gen.isEmpty() || city.isEmpty() || add.isEmpty()){
+            JOptionPane.showMessageDialog(
+            this, "Please fill in all fields.");
+            return;
+        }
+        String sql = "UPDATE applications SET FirstName = ?, LastName =?, Gender =?, City =?, Address =? WHERE ID = ?";
+        try(PreparedStatement updatePst = conn.prepareStatement(sql)){
+            updatePst.setString(1, fn);
+            updatePst.setString(2, ln);
+            updatePst.setString(3, gen);
+            updatePst.setString(4, city);
+            updatePst.setString(5, add);
+            updatePst.setInt(6, selectedID);
+            
+            int rowUpdated = updatePst.executeUpdate();
+            if(rowUpdated > 0){
+                JOptionPane.showMessageDialog(this,"Record updated successfully!");
+            loadApplications(); 
+            clearFields();
+            selectedID = -1;
+            }else{
+                JOptionPane.showMessageDialog(this, "No record was updated.");
+            }
+        }catch(java.sql.SQLException e){
+            JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_updatebtnActionPerformed
+
+    private void deletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
+        int row = tblapplication.getSelectedRow();
+        if (row == -1){
+            JOptionPane.showMessageDialog(this,"Please select a record to delete.");
+            return;
+        }
+        int confirm = JOptionPane.showConfirmDialog(this,"Are you sure you want to delete this record?", "Confirm Delete", JOptionPane.YES_NO_OPTION);{
+        if(confirm != JOptionPane.YES_OPTION){
+            return;
+        }
+        int id = Integer.parseInt(
+        tblapplication.getValueAt(row, 0).toString());
+        
+        try{
+            String sql = "DELETE FROM applications WHERE ID = ?";
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, id);
+            
+            int result = pst.executeUpdate();
+            if (result > 0){
+                JOptionPane.showMessageDialog(this, "Record deleted successfully!");
+                loadApplications();
+                clearFields();
+                selectedID = -1;
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(this, "Error deleting record: " + e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_deletebtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,17 +370,19 @@ public class Dashboard extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Dashboard().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Dashboard().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField add_text;
     private javax.swing.JToggleButton back;
+    private javax.swing.JTextField city_text;
     private javax.swing.JButton createbtn;
     private javax.swing.JButton deletebtn;
+    private javax.swing.JTextField fn_text;
+    private javax.swing.JTextField gen_text;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -198,12 +392,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField prod_id;
-    private javax.swing.JTextField prod_name;
-    private javax.swing.JTextField prod_price;
-    private javax.swing.JTextField prod_price1;
-    private javax.swing.JTextField prod_qty;
+    private javax.swing.JTextField ln_text;
+    private javax.swing.JTable tblapplication;
     private javax.swing.JButton updatebtn;
     // End of variables declaration//GEN-END:variables
 }

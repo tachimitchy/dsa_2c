@@ -4,19 +4,26 @@
  */
 package com.mycompany.log.in.CRUD;
 
-import com.mycompany.log.in.CRUD.CRUD;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Chichi
  */
-public class CRUD_APP extends javax.swing.JFrame {
-
+public class LogIn extends javax.swing.JFrame {
+    Connection conn;
+    PreparedStatement pst;
+    ResultSet rs;
     /**
      * Creates new form CRUD_APP
      */
-    public CRUD_APP() {
+    public LogIn() {
         initComponents();
+        conn = MSConnect.conn();
         this.setResizable(false);
     }
 
@@ -114,16 +121,45 @@ public class CRUD_APP extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void resetInput(){
+        fn_text.setText("");
+        em_text.setText("");
+        pass_text.setText("");
+    }
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
         this.hide(); // that means current frame hide when I click this signup button
-        CRUD crudObj = new CRUD();
+        SignUp crudObj = new SignUp();
         crudObj.show(); // that means this show the signup frame
         
     }//GEN-LAST:event_signupActionPerformed
 
     private void loginbutton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbutton1ActionPerformed
+        String fn = fn_text.getText();
+        String email = em_text.getText();
+        char[] pass = pass_text.getPassword();
+        String user_pass = String.valueOf(pass);
         
+        try{
+        String sqlquery = "Select * From signup WHERE FullName = ? and Email = ? and Password = ? ";
+        pst = conn.prepareStatement(sqlquery);
+        pst.setString(1,fn);
+        pst.setString(2,email);
+        pst.setString(3, user_pass);
+            rs = pst.executeQuery();
+            
+            if(!rs.next()){
+                JOptionPane.showMessageDialog(null,"Incorrect input either username or password");
+                resetInput();
+            }else{
+                JOptionPane.showMessageDialog(null,"Login successfull");
+                this.hide(); // that means current frame hide when I click this signup button
+                Dashboard crudObj = new Dashboard();
+                crudObj.show(); // that means this show the signup frame
+            }
+        }catch(SQLException e){
+            
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_loginbutton1ActionPerformed
 
     /**
@@ -143,19 +179,20 @@ public class CRUD_APP extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CRUD_APP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CRUD_APP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CRUD_APP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CRUD_APP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new CRUD_APP().setVisible(true);
+            new LogIn().setVisible(true);
         });
     }
 

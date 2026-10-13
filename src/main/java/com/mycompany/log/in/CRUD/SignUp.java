@@ -3,18 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.log.in.CRUD;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Chichi
  */
-public class CRUD extends javax.swing.JFrame {
-
+public class SignUp extends javax.swing.JFrame {
+    Connection conn;
+    PreparedStatement pst;
+    ResultSet rs;
     /**
      * Creates new form CRUD
      */
-    public CRUD() {
+    public SignUp() {
         initComponents();
+        conn = MSConnect.conn();
         this.setResizable(false);
     }
 
@@ -91,17 +99,57 @@ public class CRUD extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void resetInput(){
+        fn_text.setText("");
+        em_text.setText("");
+        pass_text.setText("");
+    }
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         this.hide();
-        CRUD_APP crud_appObj = new CRUD_APP();
+        LogIn crud_appObj = new LogIn();
         crud_appObj.show();
     }//GEN-LAST:event_backActionPerformed
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
-        //fn = fn_text;
-        //email = em_text;
-        //pass = pass_text;
+        String fn = fn_text.getText();
+        String email = em_text.getText();
+        char[] pass = pass_text.getPassword();
+        String user_pass = String.valueOf(pass);
+        
+        try{
+        String sqlquery = "Select * From signup WHERE FullName = ? and Email = ? and Password = ? ";
+        pst = conn.prepareStatement(sqlquery);
+        pst.setString(1,fn);
+        pst.setString(2,email);
+        pst.setString(3, user_pass);
+            rs = pst.executeQuery();
+            
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, "Account Exist");
+                resetInput();
+            }else{
+                try{
+                String sqlquery1 = "INSERT INTO signup (FullName,Email,Password) VALUES(?,?,?)";
+                pst = conn.prepareStatement(sqlquery1);
+                pst.setString(1,fn);
+                pst.setString(2,email);
+                pst.setString(3, user_pass);
+            
+                int insert = pst.executeUpdate();
+            
+                if (insert > 0) {
+                JOptionPane.showMessageDialog(null, "Signed-Up Successfully");
+                this.hide(); // that means current frame hide when I click this signup button
+                LogIn crudObj = new LogIn();
+                crudObj.show(); 
+                }
+                }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_signupActionPerformed
 
     /**
@@ -120,15 +168,16 @@ public class CRUD extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
         
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new CRUD().setVisible(true);
+            new SignUp().setVisible(true);
         });
     }
 
