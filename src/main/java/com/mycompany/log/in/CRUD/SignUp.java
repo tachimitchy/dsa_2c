@@ -49,23 +49,28 @@ public class SignUp extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        fn_label.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        fn_label.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         fn_label.setText("Full Name:");
         jPanel1.add(fn_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
 
-        pass_lb.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        pass_lb.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         pass_lb.setText("Password:");
         jPanel1.add(pass_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+
+        pass_text.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(pass_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 250, 30));
+
+        fn_text.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(fn_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 250, 30));
 
         back.setBackground(new java.awt.Color(0, 204, 204));
-        back.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        back.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         back.setText("BACK");
+        back.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backActionPerformed(evt);
@@ -73,13 +78,15 @@ public class SignUp extends javax.swing.JFrame {
         });
         jPanel1.add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, 120, 30));
 
-        email_lb.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        email_lb.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         email_lb.setText("Email:");
         jPanel1.add(email_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
+
+        em_text.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(em_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 250, 30));
 
-        signup.setBackground(new java.awt.Color(0, 204, 204));
-        signup.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        signup.setBackground(new java.awt.Color(0, 255, 255));
+        signup.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         signup.setText("SIGN UP");
         signup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

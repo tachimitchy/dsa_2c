@@ -48,24 +48,30 @@ public class LogIn extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 204, 255));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        fn_label.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        fn_label.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         fn_label.setText("Full Name:");
         jPanel1.add(fn_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
 
-        pass_lb.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        pass_lb.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         pass_lb.setText("Password:");
         jPanel1.add(pass_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+
+        pass_text.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(pass_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 260, 30));
+
+        fn_text.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(fn_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 260, 30));
 
         signup.setBackground(new java.awt.Color(0, 204, 204));
-        signup.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        signup.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         signup.setText("SIGNUP");
+        signup.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         signup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 signupActionPerformed(evt);
@@ -73,14 +79,17 @@ public class LogIn extends javax.swing.JFrame {
         });
         jPanel1.add(signup, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 120, 30));
 
-        email_lb.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        email_lb.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         email_lb.setText("Email:");
         jPanel1.add(email_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
+
+        em_text.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(em_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 260, 30));
 
-        loginbutton1.setBackground(new java.awt.Color(0, 204, 204));
-        loginbutton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        loginbutton1.setBackground(new java.awt.Color(0, 255, 255));
+        loginbutton1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         loginbutton1.setText("LOGIN");
+        loginbutton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         loginbutton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginbutton1ActionPerformed(evt);
@@ -88,11 +97,11 @@ public class LogIn extends javax.swing.JFrame {
         });
         jPanel1.add(loginbutton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 120, 30));
 
-        jLabel5.setBackground(new java.awt.Color(0, 204, 204));
+        jLabel5.setBackground(new java.awt.Color(0, 204, 255));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("LOG-IN");
-        jLabel5.setBorder(new javax.swing.border.MatteBorder(null));
+        jLabel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

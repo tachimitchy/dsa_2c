@@ -7,13 +7,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Chichi
  */
 public class Dashboard extends javax.swing.JFrame {
     Connection conn;
+    Connection con;
     PreparedStatement pst;
     ResultSet rs;
     
@@ -57,6 +61,7 @@ public class Dashboard extends javax.swing.JFrame {
         createbtn = new javax.swing.JButton();
         updatebtn = new javax.swing.JButton();
         deletebtn = new javax.swing.JButton();
+        clearbtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         back = new javax.swing.JToggleButton();
@@ -105,29 +110,50 @@ public class Dashboard extends javax.swing.JFrame {
         add_text.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jPanel1.add(add_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 160, -1));
 
+        createbtn.setBackground(new java.awt.Color(102, 255, 0));
+        createbtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         createbtn.setText("CREATE");
+        createbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         createbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createbtnActionPerformed(evt);
             }
         });
-        jPanel1.add(createbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 110, 30));
+        jPanel1.add(createbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 110, 30));
 
+        updatebtn.setBackground(new java.awt.Color(0, 255, 255));
+        updatebtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         updatebtn.setText("UPDATE");
+        updatebtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         updatebtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updatebtnActionPerformed(evt);
             }
         });
-        jPanel1.add(updatebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 110, 30));
+        jPanel1.add(updatebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 110, 30));
 
+        deletebtn.setBackground(new java.awt.Color(255, 102, 102));
+        deletebtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        deletebtn.setForeground(new java.awt.Color(204, 255, 255));
         deletebtn.setText("DELETE");
+        deletebtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         deletebtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deletebtnActionPerformed(evt);
             }
         });
-        jPanel1.add(deletebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 380, 110, 30));
+        jPanel1.add(deletebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 110, 30));
+
+        clearbtn.setBackground(new java.awt.Color(0, 204, 204));
+        clearbtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        clearbtn.setText("CLEAR");
+        clearbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        clearbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearbtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(clearbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 110, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 300, 430));
 
@@ -139,11 +165,12 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("APPLICATION");
         jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 200, 38));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 200, 38));
 
         back.setBackground(new java.awt.Color(0, 204, 204));
         back.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         back.setText("BACK");
+        back.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backActionPerformed(evt);
@@ -342,6 +369,17 @@ public class Dashboard extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_deletebtnActionPerformed
 
+    private void clearbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearbtnActionPerformed
+        fn_text.setText("");
+        ln_text.setText("");
+        gen_text.setText("");
+        city_text.setText("");
+        add_text.setText("");
+    }//GEN-LAST:event_clearbtnActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
     /**
      * @param args the command line arguments
      */
@@ -379,6 +417,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField add_text;
     private javax.swing.JToggleButton back;
     private javax.swing.JTextField city_text;
+    private javax.swing.JButton clearbtn;
     private javax.swing.JButton createbtn;
     private javax.swing.JButton deletebtn;
     private javax.swing.JTextField fn_text;
