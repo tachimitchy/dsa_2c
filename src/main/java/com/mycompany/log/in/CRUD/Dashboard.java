@@ -65,8 +65,11 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         back = new javax.swing.JToggleButton();
+        txtsearch = new javax.swing.JTextField();
+        btnsearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblapplication = new javax.swing.JTable();
+        REFRESH = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -178,6 +181,21 @@ public class Dashboard extends javax.swing.JFrame {
         });
         jPanel2.add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, 30));
 
+        txtsearch.setBackground(new java.awt.Color(0, 255, 255));
+        txtsearch.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(txtsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 240, 30));
+
+        btnsearch.setBackground(new java.awt.Color(0, 204, 255));
+        btnsearch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnsearch.setText("SEARCH");
+        btnsearch.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnsearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsearchActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 80, 30));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 50));
 
         tblapplication.setModel(new javax.swing.table.DefaultTableModel(
@@ -198,7 +216,18 @@ public class Dashboard extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblapplication);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 60, -1, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 60, -1, 410));
+
+        REFRESH.setBackground(new java.awt.Color(0, 204, 255));
+        REFRESH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        REFRESH.setText("REFRESH");
+        REFRESH.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        REFRESH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                REFRESHActionPerformed(evt);
+            }
+        });
+        getContentPane().add(REFRESH, new org.netbeans.lib.awtextra.AbsoluteConstraints(494, 470, 80, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -377,6 +406,24 @@ public class Dashboard extends javax.swing.JFrame {
         add_text.setText("");
     }//GEN-LAST:event_clearbtnActionPerformed
 
+    private void REFRESHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_REFRESHActionPerformed
+        txtsearch.setText("");
+        tblapplication.setRowSorter(null);
+        tblapplication.clearSelection();
+    }//GEN-LAST:event_REFRESHActionPerformed
+
+    private void btnsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsearchActionPerformed
+       String search = txtsearch.getText();
+       javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tblapplication.getModel();
+       javax.swing.table.TableRowSorter<javax.swing.table.DefaultTableModel> sorter = new javax.swing.table.TableRowSorter<>(model);
+       tblapplication.setRowSorter(sorter);
+       if (search.isEmpty()) {
+           sorter.setRowFilter(null);
+       }else{
+            sorter.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + java.util.regex.Pattern.quote(search), 1, 2));
+       }
+    }//GEN-LAST:event_btnsearchActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -414,8 +461,10 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton REFRESH;
     private javax.swing.JTextField add_text;
     private javax.swing.JToggleButton back;
+    private javax.swing.JButton btnsearch;
     private javax.swing.JTextField city_text;
     private javax.swing.JButton clearbtn;
     private javax.swing.JButton createbtn;
@@ -433,6 +482,11 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField ln_text;
     private javax.swing.JTable tblapplication;
+    private javax.swing.JTextField txtsearch;
     private javax.swing.JButton updatebtn;
     // End of variables declaration//GEN-END:variables
+
+    private void loadTable() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
