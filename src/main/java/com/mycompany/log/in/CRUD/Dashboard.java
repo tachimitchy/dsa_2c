@@ -183,6 +183,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         txtsearch.setBackground(new java.awt.Color(0, 255, 255));
         txtsearch.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        txtsearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtsearchActionPerformed(evt);
+            }
+        });
         jPanel2.add(txtsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 240, 30));
 
         btnsearch.setBackground(new java.awt.Color(0, 204, 255));
@@ -423,6 +428,10 @@ public class Dashboard extends javax.swing.JFrame {
             sorter.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + java.util.regex.Pattern.quote(search), 1, 2));
        }
     }//GEN-LAST:event_btnsearchActionPerformed
+
+    private void txtsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtsearchActionPerformed
 
     /**
      * @param args the command line arguments
